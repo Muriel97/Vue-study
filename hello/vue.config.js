@@ -57,22 +57,25 @@ module.exports = {
 
   devServer: {
     open: process.platform === "darwin",
-
     disableHostCheck: false,
-
     host: "0.0.0.0",
-
     port: 8088,
-
     https: false,
-
     hotOnly: false, // See https://github.com/vuejs/vue-cli/blob/dev/docs/cli-service.md#configuring-proxy
-
-    proxy: null // string | Object
-
+    proxy: {
+      '/api': {
+        target: '<url>', //
+        ws: true, // 如果要代理 websockets，配置这个参数
+        secure: false,  // 如果是https接口，需要配置这个参数
+        changeOrigin: true, // 是否跨域
+        pathRewrite:{
+          '^/api':''
+        }
+      }
+    } // string | Object
     // before: app => {}
-  }, // 第三方插件配置
-
+  },
+  // 第三方插件配置
   pluginOptions: {
     // ...
   }
